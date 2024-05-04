@@ -40,12 +40,6 @@ declare type User = {
     ssn: string;
 };
 
-declare interface TotalBalanceBoxProps {
-    accounts: [],
-    totalBanks: string;
-    totalCurrentBalance: string;
-}
-
 declare interface CreditCardProps {
     showBalance?: boolean;
 }
@@ -215,7 +209,7 @@ declare interface RightSidebarProps {
     banks: Bank[] & Account[];
 }
 
-declare interface SiderbarProps {
+declare interface SidebarProps {
     user: User;
 }
 
