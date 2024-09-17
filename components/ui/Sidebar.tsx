@@ -6,6 +6,7 @@ import Image from "next/image";
 import {sidebarLinks} from "@/constants";
 import {cn} from "@/lib/utils";
 import {usePathname} from "next/navigation";
+import Footer from './Footer';
 
 function Sidebar({user}: SidebarProps) {
     // we wanna change a link depending on it's active state
@@ -45,7 +46,7 @@ function Sidebar({user}: SidebarProps) {
               USER
           </nav>
 
-            FOOTER
+            <Footer user={user} />
         </section>
     );
 }

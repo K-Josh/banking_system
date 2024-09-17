@@ -11,10 +11,11 @@ import { Form } from './form'
 import CustomInput from './CustomInput'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { SignIn, SignUp } from '@/lib/actions/user.actions'
 
 
 const AuthForm = ({type}: {type: string}) => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState()
     const [isLoading, setisLoading] = useState(false)
     const router = useRouter();
 
@@ -37,21 +38,19 @@ const AuthForm = ({type}: {type: string}) => {
       
     try {
       if(type === 'sign-up') {
-        // const newUser = await signUp(data);
+        const newUser = await SignUp(data);
 
-        // setUser(newUser);
+        setUser(newUser);
       } 
       
       if(type === 'sign-in') {
-        // const res = await signIn({
-        //   email: data.email,
-        //   password: data.password,
-        // })
+        const res = await SignIn({
+          email: data.email,
+          password: data.password,
+        })
 
-        // if(res) router.push('/')
-      }
-
-      
+        if(res) router.push('/')
+      } 
     } catch (error) {
       console.log(error)
       
@@ -64,30 +63,30 @@ const AuthForm = ({type}: {type: string}) => {
     <section className='auth-form'>
       <header className='flex flex-col gap-5 md:gap-8'>
         <Link href='/' className='flex cursor-pointer items-center gap-1'>
-                <Image
-                 src="/icons/logo2.svg"
-                 alt='NextGen'
-                 width={34}
-                 height={34}
-                />
-                <h1 className='text-26 text-black-1 font-bold font-ibm-plex-serif'>NewGen</h1>
-            </Link>
+          <Image
+           src="/icons/logo2.svg"
+           alt='NextGen'
+           width={34}
+           height={34}
+          />
+          <h1 className='text-26 text-black-1 font-bold font-ibm-plex-serif'>NewGen</h1>
+        </Link>
 
-            <div className='flex flex-col gap-1 '>
-                <h1 className='text-24 font-semibold text-gray-900 lg:text-36'>
-                    {user ? 'Link Account' 
-                    : type === 'sign-in'
+        <div className='flex flex-col gap-1 '>
+           <h1 className='text-24 font-semibold text-blue-600 lg:text-36'>
+              {user ? 'Link Account' 
+                   : type === 'sign-in'
                       ? 'Sign In'
                       : 'Sign Up'
-                }
-                </h1>
-                <p className='text-16 text-gray-600 font-normal'>
-                   {user
+              }
+            </h1>
+             <p className='text-16 text-gray-600 font-normal'>
+               {user
                     ? 'Link your Account to get started'
                     : 'Please enter your details'  
                    }
                 </p>
-            </div>
+        </div>
       </header> 
       {user ? (
         <div className='flex flex-col'>
@@ -178,17 +177,17 @@ const AuthForm = ({type}: {type: string}) => {
               </Button>
              </div>
           </form>
-      </Form>
+        </Form>
 
-      <footer className='flex items-center justify-center gap-1'>
+        <footer className='flex items-center justify-center gap-1'>
         <p>
           {type === 'sign-in' ? "Don't have an account?" : "Already got an account?"}
         </p>
         <Link className='form-link' href={type === 'sign-in' ? '/sign-up' : '/sign-in'}>
           {type === 'sign-in' ? 'Sign Up' : 'Sign In'}
         </Link>
-      </footer>
-        </>
+       </footer>
+      </>
       )} 
     </section>
   )
